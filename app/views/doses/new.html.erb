@@ -1,13 +1,31 @@
-<%= simple_form_for [@cocktail, @dose] do |f|%>
-  <%= f.error_notification %>
-
-    <div class="form-inputs">
+<div class="container padded">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+    <h1>Add doses for <%= @cocktail.name %></h1>
+    <%= simple_form_for [@cocktail, @dose] do |f|%>
       <%= f.input :description %>
-      <%= f.input :ingredient, collection: @ingredient %>
+      <%#= f.input :ingredient, collection: @ingredient %>
+      <%= f.association :ingredient %>
+      <%= f.button :submit %>
+    <% end %>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- ici association pour afficher choix a la place de collection ingredient-->
+
+  <%#= f.error_notification %>
+<!--
+    <div class="form-inputs">
+      <%#= f.input :description %>
+      <%#= f.input :ingredient, collection: @ingredient %>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit %>
+      <%#= f.button :submit %>
     </div>
 
-  <% end %>
+  <%# end %>
+ -->

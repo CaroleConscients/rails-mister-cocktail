@@ -1,5 +1,5 @@
 class DosesController < ApplicationController
-  before_action :find_dose, only: [:create]
+  before_action :find_dose, only: [:create, :edit, :update, :destroy]
 
   def new
     @cocktail = Cocktail.find(params[:cocktail_id])
@@ -8,8 +8,8 @@ class DosesController < ApplicationController
   end
 
   def create
-
-
+    #@dose = Dose.new(dose_params)
+    # @dose.cocktail
   end
 
 
@@ -17,7 +17,7 @@ class DosesController < ApplicationController
   end
 
   def update
-    @dose.update(params[:dose])
+    @dose.update(params[:id])
   end
 
   def destroy
@@ -29,6 +29,10 @@ class DosesController < ApplicationController
   def find_dose
     @dose = Dose.find(params[:id])
   end
+
+  def dose_params
+    params.require(:dose).permit(:description, :ingredient_id, )
+  end
 end
 
-# :edit, :update, :destroy]
+# livecode find_cocktail et pas dose
