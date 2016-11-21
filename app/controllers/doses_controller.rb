@@ -1,38 +1,31 @@
 class DosesController < ApplicationController
-  before_action :find_dose, only: [:create, :edit, :update, :destroy]
+  before_action :set_cocktail, only: [:create]
 
-  def new
-    @cocktail = Cocktail.find(params[:cocktail_id])
-    @dose = Dose.new
-    @ingredient = Ingredient.all
-  end
 
   def create
-    #@dose = Dose.new(dose_params)
-    # @dose.cocktail
-  end
-
-
-  def edit
-  end
-
-  def update
-    @dose.update(params[:id])
+    @dose = Dose.new(dose_params)
+    @dose.cocktail = @cocktail
+    if @dose.save
+      redirect_to cocktail_path(@cocktail)
+    else
+      render "cocktails/show"
+    end
   end
 
   def destroy
-    @dose.delete
+    @dose = Dose.find(params[:id])
+    @cocktail = @dose.cocktail
+    @dose.destroy
+    redirect_to cocktail_path(@cocktail)
   end
 
   private
 
-  def find_dose
-    @dose = Dose.find(params[:id])
+  def set_cocktail
+    @cocktail = Cocktail.find(params[:cocktail_id])
   end
 
   def dose_params
-    params.require(:dose).permit(:description, :ingredient_id, )
+    params.require(:dose).permit(:description, :ingredient_id)
   end
 end
-
-# livecode find_cocktail et pas dose
